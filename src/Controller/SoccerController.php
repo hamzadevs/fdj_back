@@ -3,24 +3,13 @@ namespace App\Controller;
 
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/api")
+ */
 class SoccerController extends ApiController{
 
     /**
-     * @Route("/test", name="championat", methods="GET")
-     */
-    public function index()
-    {
-
-        $leagues = $this->CallApi("GET",$this->container->getParameter('apiUrl')."search_all_teams.php?l=French%20ligue%201");
-        if ($leagues['status']) {
-            return $this->respond($leagues['data']);
-        } else {
-            return  $this->respondWithErrors($leagues['message']);
-        }
-
-    }
-    /**
-     * 
+     * @Route("/get_leagues", name="get_leagues", methods="GET")
      */
     public function getAllLeagues()
     {
@@ -31,10 +20,13 @@ class SoccerController extends ApiController{
             return  $this->respondWithErrors($leagues['message']);
         }  
     }
-
+    /**
+     * @Route("/get_teams/{league}", name="get_teams_league", methods="GET")
+     */
     public function getAllTeams($league)
     {
         if($league){
+            $league = str_replace('+', '%20', $league);
             $teams = $this->CallApi("GET",$this->container->getParameter('apiUrl')."search_all_teams.php?l=".$league);
             if (!$teams['status']) {
                 return $this->respondWithErrors($teams['message']);
@@ -43,6 +35,9 @@ class SoccerController extends ApiController{
         }else return $this->respondNotFound();
         
     }
+    /**
+     * @Route("/get_players/{teamId}", name="get_players_team", methods="GET")
+     */
     public function getAllPlayers($teamId)
     {
         if($teamId){
