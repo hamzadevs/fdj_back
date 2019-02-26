@@ -15,7 +15,7 @@ class SoccerController extends ApiController{
         if ($leagues['status']) {
             return $this->respond($leagues['data']);
         } else {
-            return  $this->respondWithErrors($teams['message']);
+            return  $this->respondWithErrors($leagues['message']);
         }
 
     }
@@ -28,7 +28,7 @@ class SoccerController extends ApiController{
         if ($leagues['status']) {
             return $this->respond($leagues['data']);
         } else {
-            return  $this->respondWithErrors($teams['message']);
+            return  $this->respondWithErrors($leagues['message']);
         }  
     }
 
